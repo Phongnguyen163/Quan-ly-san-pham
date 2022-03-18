@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add New Product</h1>
+<div id="add">
+    <input id="ip" type="text" placeholder="New Product">
+    <button onclick="Add()">Add</button>
+</div>
+<h1>Display All Product</h1>
+<div id="display">
+    <table id="tb" width="50%"></table>
+</div>
+<script>
+    let ipName = document.getElementById("ip");
+    let tb = document.getElementById("tb");
+    let arr = ["IP13", "IP12", "S22Ultra", "Realme"]
+    Hien()
+    function Add() {
+        let tenSp = ipName.value;
+        arr.push(tenSp);
+        Hien();
+    }
+
+    function Hien() {
+        let text = "";
+        text += `<tr><td>Product Name</td><td></td><td></td><td></td><td>${arr.length} production</td></tr></tr>`;
+        for (let i = 0; i < arr.length; i++) {
+            text += `<tr><div id="${i}"><td>${arr[i]}</td><td><button class="edit" value="${i}">Edit</button></td><td></td><td><button class="delete" value="${i}">Delete</button></td><td></td></tr></div></tr>`;
+        }
+        tb.innerHTML = text;
+
+        let edit = document.getElementsByClassName("edit");
+        for (let i of edit) {
+            i.addEventListener("click", function () {
+                let d = document.getElementById(i.value);
+                let ipe = document.getElementById("ipe");
+                d.innerHTML += `<input id="ipe" type="text"><button onclick="save(ipe.value, i.value)">Save</button>`
+            })
+        }
+
+        let deleteP = document.getElementsByClassName("delete");
+        for (i of deleteP) {
+            i.addEventListener("click", function () {
+                arr.splice(i.value, 1);
+                Hien();
+            })
+        }
+    }
+
+    function save(ipe, i) {
+        let d = document.getElementById(i);
+        arr[i] = ipe;
+        Hien()
+    }
+</script>
+</body>
+</html>
